@@ -1,0 +1,119 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+
+/*Style*/
+body {
+	background-color: #eaeaeaea;
+}
+
+.kontainer {
+	width: 50%;
+	padding: 5px;
+	padding-top: 10px;
+	float: left;
+
+}
+.konten {
+	padding: 7px;
+	margin: 5px;
+}
+#tombol {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: inline-block;
+}
+
+.hasil-horoskop{
+	width: 50%;
+	background-color: purple;
+	margin-top: 10px;
+	color: white;
+	margin: auto;
+	text-align: justify;
+
+}
+.hHoroskop {
+	width: 100%;
+	background-color: green;
+	margin-top: 20px;
+	overflow: scroll;
+	height: 300px;
+	box-shadow: 5px 10px lightcoral;
+}
+
+.kontainer2{
+	float: left;
+	width: 50%;
+	padding: 5px;
+	padding-top: 10px;
+}
+.fizz {
+	margin-top: 10px;
+	margin-bottom: 28px;
+	display: inline-block;
+
+}
+.main {
+	background-color: #acb4b1;
+	margin: 100px auto;
+	width: 80%;
+	border:1px solid ;
+	
+}
+
+.hasil-fizz {
+	width: 100%;
+	margin-top: 10px;
+	color: white;
+	margin: auto;
+	text-align: justify;
+	background-color: green;
+	margin-top: 20px;
+	overflow: scroll;
+	height: 300px;
+};
+.fizz-buzz {
+	width: 100%;
+	background-color: green;
+	margin-top: 20px;
+	border: 1px solid;
+}
+
+button {
+	padding: 5px;
+	background-color: #25ad81;
+}
+button:hover {
+	background-color: lightblue;
+	cursor: pointer;
+}
