@@ -51,7 +51,7 @@ function getDataFromApi(firstName, lastName) {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "love-calculator.p.rapidapi.com",
-                "x-rapidapi-key": "c2d802e5dfmsh2b6afd4e1840e98p1a5d91jsn895516b2efd1"
+                "x-rapidapi-key": "e9ee3480abmsh8316a7d6c5faaa1p1e4cfejsnf1e116733a70"
             }
         })
         .then(response => {
@@ -75,17 +75,17 @@ function showDataIntoUi(result) {
 
 
     if (percentage > 75) {
-        message.textContent = `Congratulation,${userName.value}`;
-        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span> You have an amazing Choice ${userName.value}, Congratulation.`;
+        message.textContent = `Selamat,${userName.value}`;
+        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span> Sangat berjodoh ${userName.value}, Congratulation.`;
     } else if (percentage > 40 && percentage <= 75) {
         message.textContent = `Congratulation,${userName.value}`;
-        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span>. I Think You need to work on your Relationship , but you have an Good Choice , Congratulation.`;
+        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span>. Caknyo Berjodoh nian`;
     } else if (percentage > 25 && percentage <= 40) {
         message.textContent = `Hey,${userName.value}`;
-        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span>,Your relationship is in danger .  You Need to talk about it with ${result.fname} ${result.sname}.  Best Of Luck.`;
+        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span>,Your relationship is in danger .  Cubo Pikirke lagi ${result.fname} ${result.sname}.  Semoga berjodoh`;
     } else {
         message.textContent = `Hey,${userName.value}`;
-        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span>,${result.fname} ${result.sname} is not interested in you. But don't feel bad you will find someone else, Best Of Luck.`;
+        formalMessage.innerHTML = `${result.fname} ${result.sname} love's you <span> ${result.percentage}% </span>,${result.fname} ${result.sname} Belum bejodoh kayaknya. Maaf`;
     }
 
     setTimeout(() => {
