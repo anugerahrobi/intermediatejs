@@ -6,6 +6,10 @@ const tagline = document.querySelector('.tagline');
 const submitButton = document.querySelector('.submitBtn');
 const inputBox = document.querySelector('.input-box');
 const resultDiv = document.getElementById('results');
+const message = document.querySelector('.message-1');
+const formalMessage = document.querySelector('.message');
+const userName = document.querySelector('.username');
+const userSubmitButton = document.querySelector('.userSubmitButton');
 
 // Add eventlitner to the buttton and enter key
 
@@ -45,6 +49,7 @@ function fetchDatafromUI() {
 
 
 // getDataFromApi
+
 
 function getDataFromApi(firstName, lastName) {
     fetch(`https://love-calculator.p.rapidapi.com/getPercentage?fname=${firstName}&sname=${lastName}`, {
@@ -95,3 +100,59 @@ function showDataIntoUi(result) {
 
 }
 
+//showError
+
+function showError(error) {
+    resultDiv.style.color = 'red';
+    message.textContent = `Hey,${userName.value}`;
+    formalMessage.innerHTML = `Please check your spelling mistake or try again thank you`;
+
+
+    setTimeout(() => {
+        clearData();
+
+    }, 3000);
+}
+
+// Popup
+
+
+
+
+
+
+userSubmitButton.addEventListener('click', function () {
+
+    headline.textContent = `Welcome ${userName.value}`;
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('popup').style.visibility = 'hidden';
+
+
+});
+
+
+
+//console.log();
+
+window.onload = function () {
+    popup();
+
+}
+
+function popup() {
+    document.getElementById('popup').style.display = 'flex';
+}
+
+// clearData
+
+function clearData() {
+    resultDiv.style.display = 'none';
+    userBox.style.display = 'block';
+    tagline.style.display = 'block';
+    inputBox.style.display = 'flex';
+    firstInput.value = '';
+    lastInput.value = '';
+    message.textContent = ``;
+    formalMessage.textContent = ``;
+    resultDiv.style.color = '';
+}
