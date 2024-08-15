@@ -11,12 +11,49 @@
         <h1>Catatan Kendaraan</h1>
         <div class="form-container">
             <form id="noteForm">
-                </form>
+                <div class="form-group">
+                    <label for="kode_lambung">Kode Lambung:</label>
+                    <input type="text" id="kode_lambung" name="kode_lambung" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="plat_kendaraan">Plat Kendaraan:</label>
+                    <input type="text" id="plat_kendaraan" name="plat_kendaraan" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nama_driver">Nama Driver:</label>
+                    <input type="text" id="nama_driver" name="nama_driver" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="waktu_checker">Waktu Checker:</label>
+                    <input type="text" id="waktu_checker" name="waktu_checker" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nomor_do">Nomor DO:</label>
+                    <input type="text" id="nomor_do" name="nomor_do" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="produk">Produk:</label>
+                    <input type="text" id="produk" name="produk" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pit_asal">PIT Asal:</label>
+                    <input type="text" id="pit_asal" name="pit_asal" required>
+                </div>
+
+                <button type="submit">Simpan Catatan</button>
+                <button type="button" id="updateButton" style="display: none;">Perbarui Catatan</button>
+            </form>
         </div>
 
         <h2>Daftar Catatan</h2>
         <div class="table-wrapper">
-            <table id="noteTable">
+            <table>
                 <thead>
                     <tr>
                         <th>Kode Lambung</th>
@@ -30,7 +67,8 @@
                         <th>Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="noteTable">
+                    <!-- Catatan akan ditambahkan di sini -->
                 </tbody>
             </table>
         </div>
@@ -40,63 +78,78 @@
 
     <script src="xlsx.full.min.js"></script>
     <script>
-        let notesData = [];
+        let editRowIndex = -1;
 
-        function updateTable() {
-            const tableBody = document.getElementById('noteTable').tbody;
-            tableBody.innerHTML = '';
+        document.getElementById('noteForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            notesData.forEach((note, index) => {
-                const row = tableBody.insertRow();
-                const cells = [];
-                for (const key in note) {
-                    const cell = row.insertCell();
-                    cell.textContent = note[key];
-                    cells.push(cell);
-                }
+            const kodeLambung = document.getElementById('kode_lambung').value;
+            const platKendaraan = document.getElementById('plat_kendaraan').value;
+            const namaDriver = document.getElementById('nama_driver').value;
+            const waktuChecker = document.getElementById('waktu_checker').value;
+            const nomorDO = document.getElementById('nomor_do').value;
+            const produk = document.getElementById('produk').value;
+            const pitAsal = document.getElementById('pit_asal').value;
+
+            const now = new Date();
+            const tanggal = now.toLocaleDateString();
+
+            if (editRowIndex === -1) {
+                const table = document.getElementById('noteTable');
+                const row = table.insertRow();
+                row.insertCell(0).textContent = kodeLambung;
+                row.insertCell(1).textContent = platKendaraan;
+                row.insertCell(2).textContent = namaDriver;
+                row.insertCell(3).textContent = waktuChecker;
+                row.insertCell(4).textContent = nomorDO;
+                row.insertCell(5).textContent = produk;
+                row.insertCell(6).textContent = pitAsal;
+                row.insertCell(7).textContent = tanggal;
 
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Edit';
-                editButton.onclick = () => editNote(index);
-                cells[cells.length - 1].appendChild(editButton);
-            });
-        }
+                editButton.classList.add('edit');
+                editButton.onclick = function() {
+                    editRowIndex = row.rowIndex - 1;
+                    document.getElementById('kode_lambung').value = kodeLambung;
+                    document.getElementById('plat_kendaraan').value = platKendaraan;
+                    document.getElementById('nama_driver').value = namaDriver;
+                    document.getElementById('waktu_checker').value = waktuChecker;
+                    document.getElementById('nomor_do').value = nomorDO;
+                    document.getElementById('produk').value = produk;
+                    document.getElementById('pit_asal').value = pitAsal;
 
-        function addNote(note) {
-            notesData.push(note);
-            updateTable();
-        }
-
-        function editNote(index) {
-            const note = notesData[index];
-            // Populate form fields with note data
-            document.getElementById('kode_lambung').value = note.kode_lambung;
-            // ... populate other fields
-            document.getElementById('updateButton').style.display = 'block';
-            editRowIndex = index;
-        }
-
-        document.getElementById('noteForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const note = {
-                kode_lambung: document.getElementById('kode_lambung').value,
-                // ... other fields
-            };
-
-            if (editRowIndex !== -1) {
-                notesData[editRowIndex] = note;
-                editRowIndex = -1;
-                document.getElementById('updateButton').style.display = 'none';
+                    document.getElementById('updateButton').style.display = 'block';
+                };
+                row.insertCell(8).appendChild(editButton);
             } else {
-                addNote(note);
+                const table = document.getElementById('noteTable');
+                const row = table.rows[editRowIndex];
+                row.cells[0].textContent = kodeLambung;
+                row.cells[1].textContent = platKendaraan;
+                row.cells[2].textContent = namaDriver;
+                row.cells[3].textContent = waktuChecker;
+                row.cells[4].textContent = nomorDO;
+                row.cells[5].textContent = produk;
+                row.cells[6].textContent = pitAsal;
+                row.cells[7].textContent = tanggal;
+
+                document.getElementById('updateButton').style.display = 'none';
+                editRowIndex = -1;
             }
 
             document.getElementById('noteForm').reset();
-            updateTable();
         });
 
-        // ... other functions
+        document.getElementById('updateButton').addEventListener('click', function() {
+            document.getElementById('noteForm').dispatchEvent(new Event('submit'));
+        });
+
+        document.getElementById('exportButton').addEventListener('click', function() {
+            const table = document.getElementById('noteTable');
+            const wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+            XLSX.writeFile(wb, "CatatanKendaraan.xlsx");
+        });
     </script>
 </body>
 </html>
