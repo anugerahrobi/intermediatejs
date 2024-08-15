@@ -6,6 +6,8 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .container {
@@ -13,7 +15,9 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
 }
 
 h1, h2 {
@@ -36,6 +40,8 @@ input {
     border-radius: 5px;
     border: 1px solid #ccc;
     margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 button {
@@ -46,10 +52,16 @@ button {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 button:hover {
     background-color: #4cae4c;
+}
+
+.table-wrapper {
+    overflow-x: auto;
 }
 
 table {
@@ -62,8 +74,20 @@ th, td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: center;
+    font-size: 14px;
 }
 
 th {
     background-color: #f4f4f4;
+}
+
+@media screen and (max-width: 600px) {
+    input, button {
+        font-size: 16px;
+    }
+
+    table th, table td {
+        font-size: 12px;
+        padding: 8px;
+    }
 }
