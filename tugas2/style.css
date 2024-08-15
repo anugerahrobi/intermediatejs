@@ -28,7 +28,7 @@ h1, h2 {
 
 .form-container {
     overflow-y: auto;
-    max-height: 400px; /* Adjust based on your needs */
+    max-height: 400px;
     margin-bottom: 20px;
 }
 
@@ -48,7 +48,7 @@ label {
     color: #555;
 }
 
-input {
+input, select {
     padding: 10px;
     font-size: 16px;
     border-radius: 5px;
@@ -73,15 +73,6 @@ button {
 
 button:hover {
     background-color: #45a049;
-}
-
-button.edit {
-    background-color: #ff9800;
-    margin-top: 0;
-}
-
-button.edit:hover {
-    background-color: #e68900;
 }
 
 .table-wrapper {
