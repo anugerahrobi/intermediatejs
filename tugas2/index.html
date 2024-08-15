@@ -1,58 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Progate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catatan Kendaraan</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Mulai menggunakan AJAX</h1>
+    <div class="container">
+        <h1>Catatan Kendaraan</h1>
+        <form id="noteForm">
+            <label for="kode_lambung">Kode Lambung:</label>
+            <input type="text" id="kode_lambung" name="kode_lambung" required>
 
-  <button type="button" id="button" onclick="fetchData()">Fetch data</button>
-  <div id="progate"></div>
+            <label for="plat_kendaraan">Plat Kendaraan:</label>
+            <input type="text" id="plat_kendaraan" name="plat_kendaraan" required>
 
-  <script>
-    function fetchData() {
-      const xhttp = new XMLHttpRequest();
-      const url = "https://pokeapi.co/api/v2/pokemon?limit=30";
-      const httpMethod = "GET";
-      xhttp.onload = function() {
-        const response = JSON.parse(this.responseText);
-        const results = response.results;
+            <label for="nama_driver">Nama Driver:</label>
+            <input type="text" id="nama_driver" name="nama_driver" required>
 
-        let data = ''
-        for (i = 0; i < results.length; i++) {
-          fetchData2(results[i].url);
-        }
+            <label for="waktu_checker">Waktu Checker:</label>
+            <input type="text" id="waktu_checker" name="waktu_checker" required>
 
-        document.getElementById("progate").innerHTML = data;
-      }
-      xhttp.open(httpMethod, url);
-      xhttp.send();
-    }
-    async function fetchData2(url){
-      const response = await fetch (url, {
-        method : "GET"
-      });
+            <label for="nomor_do">Nomor DO:</label>
+            <input type="text" id="nomor_do" name="nomor_do" required>
 
-      const json = await response.json();
-      const id = json.id;
-      const name = json.name;
-      const imgPoke = json.sprites.back_default;
-      const type = json.types[0]. type.name;
+            <button type="submit">Simpan Catatan</button>
+        </form>
 
-      const getDiv = document.getElementById("progate");
-      const newPara1 = document.createElement("p");
-      const newPara2 = document.createElement("p");
-      const newImg = document.createElement("img");
-      newImg.setAttribute("src",imgPoke);
-      newPara1.innerHTML = `${id}: ${name}`;
-      newPara2.innerHTML = `type`;
-      getDiv.append(newPara1);
-      getDiv.append(newImg);
-      getDiv.append(newPara2);
+        <h2>Daftar Catatan</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Kode Lambung</th>
+                    <th>Plat Kendaraan</th>
+                    <th>Nama Driver</th>
+                    <th>Waktu Checker</th>
+                    <th>Nomor DO</th>
+                    <th>Tanggal</th>
+                </tr>
+            </thead>
+            <tbody id="noteTable">
+                <!-- Catatan akan ditambahkan di sini -->
+            </tbody>
+        </table>
 
-    }
-  </script>
+        <button id="exportButton">Export to Excel</button>
+    </div>
+
+    <script src="xlsx.full.min.js"></script>
+    <script>
+        document.getElementById('noteForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Ambil nilai dari form
+            const kodeLambung = document.getElementById('kode_lambung').value;
+            const platKendaraan = document.getElementById('plat_kendaraan').value;
+            const namaDriver = document.getElementById('nama_driver').value;
+            const waktuChecker = document.getElementById('waktu_checker').value;
+            const nomorDO = document.getElementById('nomor_do').value;
+
+            // Ambil tanggal saat ini
+            const now = new Date();
+            const tanggal = now.toLocaleDateString();
+
+            // Buat baris baru dalam tabel
+            const table = document.getElementById('noteTable');
+            const row = table.insertRow();
+            row.insertCell(0).textContent = kodeLambung;
+            row.insertCell(1).textContent = platKendaraan;
+            row.insertCell(2).textContent = namaDriver;
+            row.insertCell(3).textContent = waktuChecker;
+            row.insertCell(4).textContent = nomorDO;
+            row.insertCell(5).textContent = tanggal;
+
+            // Reset form setelah disubmit
+            document.getElementById('noteForm').reset();
+        });
+
+        document.getElementById('exportButton').addEventListener('click', function() {
+            const table = document.getElementById('noteTable');
+            const wb = XLSX.utils.table_to_book(table, {sheet: "Sheet1"});
+            XLSX.writeFile(wb, "CatatanKendaraan.xlsx");
+        });
+    </script>
 </body>
 </html>
+
