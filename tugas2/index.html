@@ -9,35 +9,47 @@
 <body>
     <div class="container">
         <h1>Catatan Kendaraan</h1>
-        <form id="noteForm">
-            <div class="form-group">
-                <label for="kode_lambung">Kode Lambung:</label>
-                <input type="text" id="kode_lambung" name="kode_lambung" required>
-            </div>
+        <div class="form-container">
+            <form id="noteForm">
+                <div class="form-group">
+                    <label for="kode_lambung">Kode Lambung:</label>
+                    <input type="text" id="kode_lambung" name="kode_lambung" required>
+                </div>
 
-            <div class="form-group">
-                <label for="plat_kendaraan">Plat Kendaraan:</label>
-                <input type="text" id="plat_kendaraan" name="plat_kendaraan" required>
-            </div>
+                <div class="form-group">
+                    <label for="plat_kendaraan">Plat Kendaraan:</label>
+                    <input type="text" id="plat_kendaraan" name="plat_kendaraan" required>
+                </div>
 
-            <div class="form-group">
-                <label for="nama_driver">Nama Driver:</label>
-                <input type="text" id="nama_driver" name="nama_driver" required>
-            </div>
+                <div class="form-group">
+                    <label for="nama_driver">Nama Driver:</label>
+                    <input type="text" id="nama_driver" name="nama_driver" required>
+                </div>
 
-            <div class="form-group">
-                <label for="waktu_checker">Waktu Checker:</label>
-                <input type="text" id="waktu_checker" name="waktu_checker" required>
-            </div>
+                <div class="form-group">
+                    <label for="waktu_checker">Waktu Checker:</label>
+                    <input type="text" id="waktu_checker" name="waktu_checker" required>
+                </div>
 
-            <div class="form-group">
-                <label for="nomor_do">Nomor DO:</label>
-                <input type="text" id="nomor_do" name="nomor_do" required>
-            </div>
+                <div class="form-group">
+                    <label for="nomor_do">Nomor DO:</label>
+                    <input type="text" id="nomor_do" name="nomor_do" required>
+                </div>
 
-            <button type="submit">Simpan Catatan</button>
-            <button type="button" id="updateButton" style="display: none;">Perbarui Catatan</button>
-        </form>
+                <div class="form-group">
+                    <label for="produk">Produk:</label>
+                    <input type="text" id="produk" name="produk" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pit_asal">PIT Asal:</label>
+                    <input type="text" id="pit_asal" name="pit_asal" required>
+                </div>
+
+                <button type="submit">Simpan Catatan</button>
+                <button type="button" id="updateButton" style="display: none;">Perbarui Catatan</button>
+            </form>
+        </div>
 
         <h2>Daftar Catatan</h2>
         <div class="table-wrapper">
@@ -49,6 +61,8 @@
                         <th>Nama Driver</th>
                         <th>Waktu Checker</th>
                         <th>Nomor DO</th>
+                        <th>Produk</th>
+                        <th>PIT Asal</th>
                         <th>Tanggal</th>
                         <th>Aksi</th>
                     </tr>
@@ -74,6 +88,8 @@
             const namaDriver = document.getElementById('nama_driver').value;
             const waktuChecker = document.getElementById('waktu_checker').value;
             const nomorDO = document.getElementById('nomor_do').value;
+            const produk = document.getElementById('produk').value;
+            const pitAsal = document.getElementById('pit_asal').value;
 
             const now = new Date();
             const tanggal = now.toLocaleDateString();
@@ -86,7 +102,9 @@
                 row.insertCell(2).textContent = namaDriver;
                 row.insertCell(3).textContent = waktuChecker;
                 row.insertCell(4).textContent = nomorDO;
-                row.insertCell(5).textContent = tanggal;
+                row.insertCell(5).textContent = produk;
+                row.insertCell(6).textContent = pitAsal;
+                row.insertCell(7).textContent = tanggal;
 
                 const editButton = document.createElement('button');
                 editButton.textContent = 'Edit';
@@ -98,10 +116,12 @@
                     document.getElementById('nama_driver').value = namaDriver;
                     document.getElementById('waktu_checker').value = waktuChecker;
                     document.getElementById('nomor_do').value = nomorDO;
+                    document.getElementById('produk').value = produk;
+                    document.getElementById('pit_asal').value = pitAsal;
 
                     document.getElementById('updateButton').style.display = 'block';
                 };
-                row.insertCell(6).appendChild(editButton);
+                row.insertCell(8).appendChild(editButton);
             } else {
                 const table = document.getElementById('noteTable');
                 const row = table.rows[editRowIndex];
@@ -110,7 +130,9 @@
                 row.cells[2].textContent = namaDriver;
                 row.cells[3].textContent = waktuChecker;
                 row.cells[4].textContent = nomorDO;
-                row.cells[5].textContent = tanggal;
+                row.cells[5].textContent = produk;
+                row.cells[6].textContent = pitAsal;
+                row.cells[7].textContent = tanggal;
 
                 document.getElementById('updateButton').style.display = 'none';
                 editRowIndex = -1;
