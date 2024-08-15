@@ -26,6 +26,7 @@
             <input type="text" id="nomor_do" name="nomor_do" required>
 
             <button type="submit">Simpan Catatan</button>
+            <button type="button" id="updateButton" style="display: none;">Perbarui Catatan</button>
         </form>
 
         <h2>Daftar Catatan</h2>
@@ -39,6 +40,7 @@
                         <th>Waktu Checker</th>
                         <th>Nomor DO</th>
                         <th>Tanggal</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="noteTable">
@@ -52,32 +54,62 @@
 
     <script src="xlsx.full.min.js"></script>
     <script>
+        let editRowIndex = -1;
+
         document.getElementById('noteForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Ambil nilai dari form
             const kodeLambung = document.getElementById('kode_lambung').value;
             const platKendaraan = document.getElementById('plat_kendaraan').value;
             const namaDriver = document.getElementById('nama_driver').value;
             const waktuChecker = document.getElementById('waktu_checker').value;
             const nomorDO = document.getElementById('nomor_do').value;
 
-            // Ambil tanggal saat ini
             const now = new Date();
             const tanggal = now.toLocaleDateString();
 
-            // Buat baris baru dalam tabel
-            const table = document.getElementById('noteTable');
-            const row = table.insertRow();
-            row.insertCell(0).textContent = kodeLambung;
-            row.insertCell(1).textContent = platKendaraan;
-            row.insertCell(2).textContent = namaDriver;
-            row.insertCell(3).textContent = waktuChecker;
-            row.insertCell(4).textContent = nomorDO;
-            row.insertCell(5).textContent = tanggal;
+            if (editRowIndex === -1) {
+                const table = document.getElementById('noteTable');
+                const row = table.insertRow();
+                row.insertCell(0).textContent = kodeLambung;
+                row.insertCell(1).textContent = platKendaraan;
+                row.insertCell(2).textContent = namaDriver;
+                row.insertCell(3).textContent = waktuChecker;
+                row.insertCell(4).textContent = nomorDO;
+                row.insertCell(5).textContent = tanggal;
 
-            // Reset form setelah disubmit
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Edit';
+                editButton.onclick = function() {
+                    editRowIndex = row.rowIndex - 1;
+                    document.getElementById('kode_lambung').value = kodeLambung;
+                    document.getElementById('plat_kendaraan').value = platKendaraan;
+                    document.getElementById('nama_driver').value = namaDriver;
+                    document.getElementById('waktu_checker').value = waktuChecker;
+                    document.getElementById('nomor_do').value = nomorDO;
+
+                    document.getElementById('updateButton').style.display = 'block';
+                };
+                row.insertCell(6).appendChild(editButton);
+            } else {
+                const table = document.getElementById('noteTable');
+                const row = table.rows[editRowIndex];
+                row.cells[0].textContent = kodeLambung;
+                row.cells[1].textContent = platKendaraan;
+                row.cells[2].textContent = namaDriver;
+                row.cells[3].textContent = waktuChecker;
+                row.cells[4].textContent = nomorDO;
+                row.cells[5].textContent = tanggal;
+
+                document.getElementById('updateButton').style.display = 'none';
+                editRowIndex = -1;
+            }
+
             document.getElementById('noteForm').reset();
+        });
+
+        document.getElementById('updateButton').addEventListener('click', function() {
+            document.getElementById('noteForm').dispatchEvent(new Event('submit'));
         });
 
         document.getElementById('exportButton').addEventListener('click', function() {
